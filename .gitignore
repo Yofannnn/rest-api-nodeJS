@@ -1,0 +1,16 @@
+# dependecies
+/node_modules
+
+# production
+/dist
+/build
+
+# misc
+.DS_Store
+.package-lock.json
+
+# local env files
+*.env
+*.env.example
+*.env.local
+*.env.staging
