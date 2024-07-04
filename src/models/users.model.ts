@@ -6,13 +6,29 @@ const usersSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+    firstname: {
+      type: String,
+      default: "",
+    },
+    lastname: {
+      type: String,
+      default: "",
+    },
+    birthday: {
+      type: String,
+      default: "",
+    },
+    gender: {
+      type: String,
+      default: "",
+    },
+    telp: {
+      type: String,
+      default: "",
+    },
     email: {
       type: String,
       unique: true,
-    },
-    name: {
-      type: String,
-      default: "",
     },
     password: {
       type: String,

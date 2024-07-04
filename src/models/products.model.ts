@@ -24,6 +24,12 @@ const productsSchema = new mongoose.Schema(
     image: {
       type: String,
     },
+    sizes: [
+      {
+        size: Number,
+        quantity: Number,
+      },
+    ],
     recommendation: {
       type: Boolean,
     },

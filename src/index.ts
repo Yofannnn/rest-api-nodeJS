@@ -1,10 +1,19 @@
-import express, { Application, Request, Response, NextFunction } from "express";
+import express, { Application } from "express";
 import { routes } from "./routes/index.route";
 import bodyParser from "body-parser";
 import cors from "cors";
 import "./utils/connectDB";
 import deserializedToken from "./middleware/deserializedToken";
-import * as path from 'path'
+import * as path from "path";
+import cookieParser from "cookie-parser";
+
+declare global {
+  namespace Express {
+    interface Request {
+      userId?: string;
+    }
+  }
+}
 
 const app: Application = express();
 const port: Number = 3000;
@@ -12,13 +21,16 @@ const port: Number = 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(cors());
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Method", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  next();
-});
+const corsOptions = {
+  origin: process.env.ORIGIN_DOMAIN,
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization,",
+};
+app.use(cors(corsOptions));
+
+app.use(cookieParser());
 
 app.use(deserializedToken);
 
@@ -31,4 +43,4 @@ app.use(
 
 app.listen(port, () => console.log(`port is listening at ${port}`));
 
-module.exports = app
+module.exports = app;

@@ -20,6 +20,7 @@ export const getProducts = async (req: Request, res: Response) => {
   if (id) {
     try {
       const dataByID = await getProductByID(id);
+      if (!dataByID) throw new Error("Product not found");
       return res
         .status(200)
         .send({ status: true, statusCode: 200, data: dataByID });
@@ -31,12 +32,13 @@ export const getProducts = async (req: Request, res: Response) => {
   }
   try {
     const dataAllProducts = await getProductsFromDB();
+    if (!dataAllProducts) throw new Error("Internal Server Error");
     return res
       .status(200)
       .send({ status: true, statusCode: 200, data: dataAllProducts });
   } catch (err: any) {
     return res
-      .status(404)
+      .status(500)
       .send({ status: false, statusCode: 404, message: err.message });
   }
 };

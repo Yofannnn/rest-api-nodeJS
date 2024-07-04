@@ -10,6 +10,14 @@ export const createProductsValidation = (payload: productsType) => {
     price: Joi.number().required(),
     description: Joi.string().required(),
     image: Joi.string().required(),
+    sizes: Joi.array()
+      .items(
+        Joi.object({
+          size: Joi.number().required(),
+          quantity: Joi.number().required(),
+        })
+      )
+      .required(),
     recommendation: Joi.boolean().allow("", null),
   });
   return schema.validate(payload);
